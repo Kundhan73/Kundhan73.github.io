@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kundhan Vudutha | Digital Alchemist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glow-color: #00ffff;
+            --secondary-glow: #ff00ff;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: #000000;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+        
+        .orbitron {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+        }
+
+        .text-glow {
+            text-shadow: 0 0 8px var(--glow-color), 0 0 20px var(--glow-color), 0 0 42px var(--glow-color);
+        }
+
+        .box-glow {
+            box-shadow: 0 0 5px var(--glow-color), 0 0 15px var(--glow-color), inset 0 0 5px var(--glow-color), inset 0 0 15px var(--glow-color);
+            border: 1px solid var(--glow-color);
+        }
+        
+        .secondary-glow {
+            box-shadow: 0 0 5px var(--secondary-glow), 0 0 15px var(--secondary-glow), inset 0 0 5px var(--secondary-glow), inset 0 0 15px var(--secondary-glow);
+            border: 1px solid var(--secondary-glow);
+        }
+
+        .link-glitch {
+            transition: all 0.3s ease;
+            transform: skew(-15deg);
+        }
+        .link-glitch:hover {
+            transform: skew(0deg) scale(1.1);
+            background-color: var(--glow-color);
+            color: #000;
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+        .link-glitch.secondary:hover {
+            background-color: var(--secondary-glow);
+            box-shadow: 0 0 20px var(--secondary-glow);
+        }
+
+        @keyframes float {
+            0% { transform: translatey(0px); }
+            50% { transform: translatey(-20px); }
+            100% { transform: translatey(0px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .fade-in-section {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes background-pan {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animated-gradient {
+            background: linear-gradient(90deg, #000, #0c001f, #13002d, #0c001f, #000);
+            background-size: 400% 400%;
+            animation: background-pan 15s ease infinite;
+        }
+
+        /* Custom scrollbar for a more thematic feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--glow-color);
+            border-radius: 10px;
+            border: 2px solid #000;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: var(--secondary-glow);
+        }
+        
+        /* The grid background */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: move-grid 20s linear infinite;
+        }
+        
+        @keyframes move-grid {
+            from { background-position: 0 0; }
+            to { background-position: 80px 80px; }
+        }
+
+    </style>
+</head>
+<body class="animated-gradient">
+    <div class="grid-background"></div>
+    <canvas id="matrix-canvas" class="fixed top-0 left-0 w-full h-full z-[-2] opacity-30"></canvas>
+
+    <div class="min-h-screen container mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10">
+        <!-- HERO SECTION -->
+        <div id="hero" class="w-full">
+            <div class="relative inline-block">
+                <img src="https://placehold.co/150x150/000000/00ffff?text=KV" alt="Your Photo" class="rounded-full box-glow w-32 h-32 md:w-40 md:h-40 object-cover mx-auto mb-4" style="animation: float 6s ease-in-out infinite;">
+                <div class="absolute top-0 left-0 w-full h-full rounded-full border-2 border-dashed border-pink-500 animate-spin" style="animation-duration: 30s;"></div>
+            </div>
+            
+            <h1 class="orbitron text-4xl md:text-7xl font-black text-glow tracking-widest my-4">
+                Kundhan Vudutha
+            </h1>
+            <p id="subtitle" class="text-lg md:text-2xl text-cyan-300 mb-8"></p>
+
+            <div class="flex justify-center space-x-4">
+                 <a href="#about" class="px-6 py-2 border border-cyan-400 text-cyan-400 rounded-md hover:bg-cyan-400 hover:text-black transition-all duration-300">Enter The Void</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 py-16 space-y-24 md:space-y-32 relative z-10">
+        
+        <!-- ABOUT ME SECTION -->
+        <section id="about" class="fade-in-section" style="animation-delay: 100ms;">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                <div class="md:col-span-1 flex justify-center">
+                     <div class="p-6 border border-pink-500 rounded-lg secondary-glow w-full max-w-sm text-center">
+                        <h3 class="orbitron text-2xl text-pink-400 mb-4">Core Stats</h3>
+                        <p class="text-left"><span class="font-bold text-pink-400">></span> Profession: Full-Stack Developer</p>
+                        <p class="text-left"><span class="font-bold text-pink-400">></span> Location: Earth, Milky Way</p>
+                        <p class="text-left"><span class="font-bold text-pink-400">></span> Status: Caffeinated</p>
+                        <p class="text-left"><span class="font-bold text-pink-400">></span> Passion: Building a better reality</p>
+                    </div>
+                </div>
+                <div class="md:col-span-2">
+                    <h2 class="orbitron text-4xl font-bold mb-4 text-glow">/ Transmitting Identity...</h2>
+                    <p class="text-lg leading-relaxed">
+                        I am a digital architect and code-weaver, building bridges between human ideas and machine logic. My journey through the digital cosmos has equipped me with a passion for creating seamless, user-centric experiences. I thrive on complex problems and believe in the power of elegant code to bring order to chaos. Ready to collaborate on the next big bang?
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- LINKS / PORTAL SECTION -->
+        <section id="portals" class="fade-in-section" style="animation-delay: 200ms;">
+             <h2 class="orbitron text-4xl font-bold mb-8 text-center text-glow">/ Activate Portals</h2>
+             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- GitHub -->
+                <a href="https://github.com/Kundhan73" target="_blank" class="link-glitch p-6 box-glow rounded-lg text-center group">
+                    <h3 class="orbitron text-2xl mb-2">GitHub</h3>
+                    <p class="text-sm text-gray-400 group-hover:text-black">View My Code Constellations</p>
+                </a>
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/kundhan-vudutha-299516321/" target="_blank" class="link-glitch secondary p-6 secondary-glow rounded-lg text-center group">
+                    <h3 class="orbitron text-2xl mb-2">LinkedIn</h3>
+                    <p class="text-sm text-gray-400 group-hover:text-black">Connect Professionally</p>
+                </a>
+                <!-- Resume -->
+                <a href="#" target="_blank" class="link-glitch p-6 box-glow rounded-lg text-center group">
+                    <h3 class="orbitron text-2xl mb-2">Resume</h3>
+                    <p class="text-sm text-gray-400 group-hover:text-black">Download My Data Packet</p>
+                </a>
+                <!-- Other Link -->
+                <a href="#" target="_blank" class="link-glitch secondary p-6 secondary-glow rounded-lg text-center group">
+                    <h3 class="orbitron text-2xl mb-2">Blog/Project</h3>
+                    <p class="text-sm text-gray-400 group-hover:text-black">Explore My Latest Signal</p>
+                </a>
+             </div>
+        </section>
+
+        <!-- SKILLS MATRIX -->
+        <section id="skills" class="fade-in-section" style="animation-delay: 300ms;">
+            <h2 class="orbitron text-4xl font-bold mb-8 text-center text-glow">/ Skills Matrix</h2>
+            <div class="bg-black bg-opacity-50 p-6 md:p-8 rounded-lg box-glow">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 text-center">
+                    <div class="p-4 rounded hover:bg-cyan-900 transition-all">
+                        <p>JavaScript</p>
+                        <div class="h-1 bg-cyan-400 mt-2 rounded-full"></div>
+                    </div>
+                     <div class="p-4 rounded hover:bg-cyan-900 transition-all">
+                        <p>React</p>
+                        <div class="h-1 bg-cyan-400 mt-2 rounded-full"></div>
+                    </div>
+                     <div class="p-4 rounded hover:bg-cyan-900 transition-all">
+                        <p>Node.js</p>
+                        <div class="h-1 bg-cyan-400 mt-2 rounded-full"></div>
+                    </div>
+                     <div class="p-4 rounded hover:bg-cyan-900 transition-all">
+                        <p>Python</p>
+                        <div class="h-1 bg-cyan-400 mt-2 rounded-full"></div>
+                    </div>
+                    <div class="p-4 rounded hover:bg-cyan-900 transition-all">
+                        <p>TailwindCSS</p>
+                        <div class="h-1 bg-cyan-400 mt-2 rounded-full"></div>
+                    </div>
+                    <div class="p-4 rounded hover:bg-pink-900 transition-all">
+                        <p>Figma</p>
+                        <div class="h-1 bg-pink-400 mt-2 rounded-full"></div>
+                    </div>
+                    <div class="p-4 rounded hover:bg-pink-900 transition-all">
+                        <p>SQL</p>
+                        <div class="h-1 bg-pink-400 mt-2 rounded-full"></div>
+                    </div>
+                    <div class="p-4 rounded hover:bg-pink-900 transition-all">
+                        <p>Docker</p>
+                        <div class="h-1 bg-pink-400 mt-2 rounded-full"></div>
+                    </div>
+                    <div class="p-4 rounded hover:bg-pink-900 transition-all">
+                        <p>Cloud Tech</p>
+                        <div class="h-1 bg-pink-400 mt-2 rounded-full"></div>
+                    </div>
+                    <div class="p-4 rounded hover:bg-pink-900 transition-all">
+                        <p>Web3</p>
+                        <div class="h-1 bg-pink-400 mt-2 rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT FORM -->
+        <section id="contact" class="fade-in-section max-w-3xl mx-auto" style="animation-delay: 400ms;">
+             <h2 class="orbitron text-4xl font-bold mb-8 text-center text-glow">/ Establish Comms</h2>
+             <form action="https://formspree.io/f/mpwjkawl" method="POST" class="space-y-6">
+                <input type="text" name="name" placeholder="> Your Alias" class="w-full bg-transparent border-b-2 border-cyan-400 focus:border-pink-500 p-2 outline-none transition-all" required>
+                <input type="email" name="email" placeholder="> Your Frequency (Email)" class="w-full bg-transparent border-b-2 border-cyan-400 focus:border-pink-500 p-2 outline-none transition-all" required>
+                <textarea name="message" rows="4" placeholder="> Your Message Transmission..." class="w-full bg-transparent border-b-2 border-cyan-400 focus:border-pink-500 p-2 outline-none transition-all" required></textarea>
+                <button type="submit" class="w-full link-glitch secondary p-3 secondary-glow rounded-lg">Transmit</button>
+             </form>
+        </section>
+    </main>
+    
+    <footer class="text-center py-8 text-gray-500">
+        <p>Crafted in a dark room with copious amounts of coffee.</p>
+        <p>&copy; 2025 Kundhan Vudutha. All systems operational.</p>
+    </footer>
+
+    <script>
+        // Matrix rain effect
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0ff';
+            ctx.font = `${fontSize}px monospace`;
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 33);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            // No need to reset columns/drops, it'll adjust
+        });
+
+        // Subtitle typewriter effect
+        const subtitleText = "Digital Alchemist & Reality Bender";
+        const subtitleElement = document.getElementById('subtitle');
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (charIndex < subtitleText.length) {
+                subtitleElement.textContent += subtitleText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 100);
+            } else {
+                 setTimeout(() => {
+                    subtitleElement.textContent = '';
+                    charIndex = 0;
+                    typeWriter();
+                }, 3000); // restart after 3 seconds
+            }
+        }
+        
+        // Scroll-triggered animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) scale(1)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Initialize typewriter
+        document.addEventListener('DOMContentLoaded', (event) => {
+            typeWriter();
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
