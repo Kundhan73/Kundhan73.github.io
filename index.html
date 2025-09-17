@@ -70,7 +70,6 @@
             opacity: 0;
         }
 
-        /* Custom scrollbar for a more thematic feel */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -89,16 +88,12 @@
     </style>
 </head>
 <body>
-    <!-- Matrix rain is now the primary background -->
     <canvas id="matrix-canvas" class="fixed top-0 left-0 w-full h-full z-[-1] opacity-50"></canvas>
 
     <div class="min-h-screen container mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10">
-        <!-- HERO SECTION -->
         <div id="hero" class="w-full flex flex-col items-center justify-center">
             
-            <!-- This container makes the animation float and applies the spinning border -->
             <div class="relative w-40 h-40 md:w-48 md:h-48 mb-4" style="animation: float 6s ease-in-out infinite;">
-                <!-- The Spline canvas is now circular, smaller, and has a glow effect -->
                 <canvas id="canvas3d" class="w-full h-full rounded-full box-glow"></canvas>
                 <div class="absolute top-0 left-0 w-full h-full rounded-full border-2 border-dashed border-pink-500 animate-spin" style="animation-duration: 30s;"></div>
             </div>
@@ -116,7 +111,6 @@
 
     <main class="container mx-auto px-4 py-16 space-y-24 md:space-y-32 relative z-10">
         
-        <!-- ABOUT ME SECTION -->
         <section id="about" class="fade-in-section" style="animation-delay: 100ms;">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
                 <div class="md:col-span-1 flex justify-center">
@@ -137,26 +131,26 @@
             </div>
         </section>
 
-        <!-- LINKS / PORTAL SECTION -->
+        
         <section id="portals" class="fade-in-section" style="animation-delay: 200ms;">
              <h2 class="orbitron text-4xl font-bold mb-8 text-center text-glow">/ Activate Portals</h2>
              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                 <!-- GitHub -->
+                 
                  <a href="https://github.com/Kundhan73" target="_blank" class="link-glitch p-6 box-glow rounded-lg text-center group">
                      <h3 class="orbitron text-2xl mb-2">GitHub</h3>
                      <p class="text-sm text-gray-400 group-hover:text-black">View My Code Constellations</p>
                  </a>
-                 <!-- LinkedIn -->
+                
                  <a href="https://www.linkedin.com/in/kundhan-vudutha-299516321/" target="_blank" class="link-glitch secondary p-6 secondary-glow rounded-lg text-center group">
                      <h3 class="orbitron text-2xl mb-2">LinkedIn</h3>
                      <p class="text-sm text-gray-400 group-hover:text-black">Connect Professionally</p>
                  </a>
-                 <!-- Resume -->
+                 
                  <a href="#" target="_blank" class="link-glitch p-6 box-glow rounded-lg text-center group">
                      <h3 class="orbitron text-2xl mb-2">Resume</h3>
                      <p class="text-sm text-gray-400 group-hover:text-black">Download My Data Packet</p>
                  </a>
-                 <!-- Other Link -->
+                 
                  <a href="#" target="_blank" class="link-glitch secondary p-6 secondary-glow rounded-lg text-center group">
                      <h3 class="orbitron text-2xl mb-2">Blog/Project</h3>
                      <p class="text-sm text-gray-400 group-hover:text-black">Explore My Latest Signal</p>
@@ -164,7 +158,6 @@
              </div>
         </section>
 
-        <!-- SKILLS MATRIX -->
         <section id="skills" class="fade-in-section" style="animation-delay: 300ms;">
             <h2 class="orbitron text-4xl font-bold mb-8 text-center text-glow">/ Skills Matrix</h2>
             <div class="bg-black bg-opacity-50 p-6 md:p-8 rounded-lg box-glow">
@@ -213,7 +206,6 @@
             </div>
         </section>
 
-        <!-- CONTACT FORM -->
         <section id="contact" class="fade-in-section max-w-3xl mx-auto" style="animation-delay: 400ms;">
              <h2 class="orbitron text-4xl font-bold mb-8 text-center text-glow">/ Establish Comms</h2>
              <form action="https://formspree.io/f/mpwjkawl" method="POST" class="space-y-6">
@@ -230,16 +222,13 @@
         <p>&copy; 2025 Kundhan Vudutha. All systems operational.</p>
     </footer>
 
-    <!-- Changed to type="module" to allow for the Spline import -->
     <script type="module">
-        // --- Spline 3D Scene Initialization ---
-        // REMINDER: In Spline, set the scene's "Background" color opacity to 0 for transparency!
+
         import { Application } from 'https://unpkg.com/@splinetool/runtime@1.0.94/build/runtime.js';
         const canvas3d = document.getElementById('canvas3d');
         const app = new Application(canvas3d);
         app.load('https://prod.spline.design/I6mSBy3IH-ft-eev/scene.splinecode');
 
-        // Matrix rain effect
         const matrixCanvas = document.getElementById('matrix-canvas');
         const ctx = matrixCanvas.getContext('2d');
 
@@ -273,10 +262,8 @@
         window.addEventListener('resize', () => {
             matrixCanvas.width = window.innerWidth;
             matrixCanvas.height = window.innerHeight;
-            // No need to reset columns/drops, it'll adjust
         });
 
-        // Subtitle typewriter effect
         const subtitleText = "Digital Alchemist & Reality Bender";
         const subtitleElement = document.getElementById('subtitle');
         let charIndex = 0;
@@ -291,11 +278,10 @@
                     subtitleElement.textContent = '';
                     charIndex = 0;
                     typeWriter();
-                }, 3000); // restart after 3 seconds
+                }, 3000); 
             }
         }
         
-        // Scroll-triggered animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -308,8 +294,6 @@
         document.querySelectorAll('.fade-in-section').forEach(section => {
             observer.observe(section);
         });
-
-        // Initialize typewriter
         document.addEventListener('DOMContentLoaded', (event) => {
             typeWriter();
         });
